@@ -16,7 +16,7 @@ User Groups in ACS app
 The problem
 ===
 
-Program this: https://github.com/disseny-de-software/exercise_flutter_acs_slides
+Program this: https://github.com/disseny-de-software/exercise_flutter_acs_slides/blob/main/README.md
 
 ---
 
@@ -28,7 +28,7 @@ Program in Flutter the user interface of the ACS app to manage the groups of use
     1. schedule = from and to dates and times, weekdays
     1. allowed actions
     1. list of users
-    1. *not* the allowed areas for the moment
+    1. *not* the allowed areas (button ![height:40](button_places.png)) for the moment
 1. show user data (name + credential) and edit them
 1. add a new group (but not delete)
 1. add a new user of a group (but not delete)
@@ -180,11 +180,11 @@ Scaffold
   appBar: AppBar
   body: Center(
     child: Gridview.count(
-      children: <Widget>[
+      children: [
         Container(
           child: Center(
             child: Column(
-              children: <Widget>[
+              children: [
                 IconButton(icon: Icon),
                 Text,]
 ```
@@ -201,7 +201,7 @@ Scaffold(
   body: Form(
     child: Container(
       child: Column(
-        children: <Widget>[
+        children: [
           TextFormField,
           TextFormField,
           Padding(
@@ -224,16 +224,187 @@ ScaffoldMessenger.of(context)
 
 ![bg right:35% height:700](schedule.png)
 
+```
+Scaffold(
+  appBar: AppBar
+  body: Container(
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Container(child: Text),
+            Text,
+            IconButton(icon: Icon)
+          ]),
+        Row like above
+        Column:
+          children: [
+            Text,
+            WeekDaySelector
+        ]),
+        Row like above,
+        Row like above
+        Padding(
+          child: ElevatedButton(
+            child: Text
+```
+
+---
+
+### Time and date classes
+
+- [``DateTime``](https://api.flutter.dev/flutter/material/TimeOfDay-class.html)
+  - constructors ``DateTime.now()`` ``DateTime(2023)``, 
+  ``DateTime(2023, 9, 7, 17, 30)`` Sept. 7 2023, 17:30
+  - weekdays ``DateTime.monday`` ... ``DateTime.sunday`` (ints)
+  - boolean method ``dt1.isAfter(dt2)``
+
+- [``TimeOfDay``](https://api.flutter.dev/flutter/material/TimeOfDay-class.html)
+  - constructor ``TimeOfDay(hour: 08, minute: 00)``
+  - accessors ``tod.hour``, ``tod.minute`` 
+  - no ``isAfter()``, make a pair of ``DateTime`` with their hour and minute
+
+---
+
+Install ``intl`` (internationalization) library and [weekday_selector](https://pub.dev/packages/weekday_selector) packages to get ``DateFormater`` and ``WeekDaySelector`` classes. In ``pubspec.yaml`` add dependencies :
+
+```yaml
+dependencies:
+  intl: ^0.18.1
+  weekday_selector: ^1.1.0
+```
+
+```dart
+final DateFormat _dateFormatter = DateFormat.yMd(); 
+// en_US locale = DateFormat("M/d/y")
+Text(_dateFormatter.format(startDate));
+// displays Sept 1st 2023 as 9/1/2023
+```
+
+
+``WeekDaySelector`` is highly customizable
+![](weekdayselector.png) 
+![](weekdayselector2.png)
+![](weekdayselector3.png)
+
+
+---
+
+### Hint: how to make a date picker to appear
+
+```dart
+late DateTime now;
+late DateTime startDate;
+// initialized in _initState()
+//...
+_pickStartDate() async {
+  DateTime? newStartDate = await showDatePicker(
+    context: context,
+    firstDate: DateTime(now.year),
+    lastDate: DateTime(now.year + 5),
+    initialDate: now,
+  );
+  startDate = newStartDate!;
+  setState(() {}); // to update the text field
+}
+```
+
+Similarly, make also a ``_pickStartTime()``
+
+See [DatePicker](https://api.flutter.dev/flutter/material/showDatePicker.html) and [TimePicker](https://api.flutter.dev/flutter/material/showTimePicker.html)
+
+
+---
+
+### Hint: how to show an error message
+
+![bg right:35% height:300](alert.png)
+
+```dart
+_showAlert(String title, String message) {
+  showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[Text(message),],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Accept'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+```
+
 ---
 
 ![bg right:35% height:700](actions.png)
+
+```dart
+Scaffold(
+  appBar: AppBar
+  body: Column(
+    children: <Widget>[
+      CheckBoxListTile(
+        title: Text
+        subtitle: Text)
+      Divider
+      # repeat 4 more times
+      Padding(
+        child: ElevatedButton(
+          child: Text
+```
+
+See [CheckBoxListTile](https://api.flutter.dev/flutter/material/CheckboxListTile-class.html)
 
 ---
 
 ![bg right:35% height:700](list_users.png)
 
+Similar to ``screen_list_groups.dart`` we already provide.
+
 ---
 
 ![bg right:35% height:700](user.png)
 
+Similar to the screen with a group info. 
+
 ---
+
+Grading
+===
+
+- 1/3 of total points if screen group (slide 13), group info (14), actions (20)
+
+- 2/3 total points if previous item plus schedule (15)
+
+- all the points if previous item plus list of users (21) and user info (22)
+
+In all the cases, it is desirable to implement persistence across screens (input/changes is really done on the data and shown) but not mandatory.
+
+FAB buttons to add a new grou and user have to be implemented but maybe the added group/user won't appear in the list later.
+
+---
+
+Deliverables
+===
+
+A zip file, named ``exercici flutter.zip`` with the following content :
+
+1. The text file with the NIU and names of the authors.
+1. If you have done the exercise with IntelliJ, directory ``lib`` plus ``pubspec.yaml``. If you have done it with dartpad.dev then the single dart source file, runnable in dartpad.
+3. Some screen captures showing how it works
+4. A small text file explaining the changes requested by the instructor during the assessment.
+
+
