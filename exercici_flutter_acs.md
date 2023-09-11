@@ -46,7 +46,7 @@ Program in Flutter the user interface of the ACS app to manage the groups of use
 
 ---
 
-Code provided
+Code provided [here](https://github.com/disseny-de-software/exercici_flutter_acs_students)
 ===
 
 [``data.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/data.dart)
@@ -266,6 +266,8 @@ Scaffold(
 
 ---
 
+### Date formatting and week day selector widget
+
 Install ``intl`` (internationalization) library and [weekday_selector](https://pub.dev/packages/weekday_selector) packages to get ``DateFormater`` and ``WeekDaySelector`` classes. In ``pubspec.yaml`` add dependencies :
 
 ```yaml
@@ -276,8 +278,7 @@ dependencies:
 
 ```dart
 final DateFormat _dateFormatter = DateFormat.yMd(); 
-// en_US locale = DateFormat("M/d/y")
-Text(_dateFormatter.format(startDate));
+Text(_dateFormatter.format(someDateTime));
 // displays Sept 1st 2023 as 9/1/2023
 ```
 
@@ -393,18 +394,18 @@ Grading
 
 In all the cases, it is desirable to implement persistence across screens (input/changes is really done on the data and shown) but not mandatory.
 
-FAB buttons to add a new grou and user have to be implemented but maybe the added group/user won't appear in the list later.
+FAB button to add a new user has to be implemented and it must appear later in the list of users.
 
 ---
 
 Deliverables
 ===
 
-A zip file, named ``exercici flutter.zip`` with the following content :
+A zip file, named ``exercici_flutter.zip`` with the following content :
 
 1. The text file with the NIU and names of the authors.
 1. If you have done the exercise with IntelliJ, directory ``lib`` plus ``pubspec.yaml``. If you have done it with dartpad.dev then the single dart source file, runnable in dartpad.
 3. Some screen captures showing how it works
-4. A small text file explaining the changes requested by the instructor during the assessment.
+4. A pdf file explaining the changes requested by the instructor during the assessment and proof of having done them.
 
 
