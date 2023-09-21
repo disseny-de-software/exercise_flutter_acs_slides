@@ -152,7 +152,7 @@ We provide you the former 5 files, you don't need to change them except for ``sc
 
 ---
 
-Hint:
+Hint: in ``screen_list_groups.dart``
 
 ```dart
 Widget _buildRow(UserGroup userGroup, int index) {
@@ -168,7 +168,14 @@ Widget _buildRow(UserGroup userGroup, int index) {
 }
 ```
 
-Why ``.then`` ? When we come back from ``ScreenGroup`` where maybe we have changed the group name or added users, we want to show the new name and present number of users.
+Why ``.then`` ? When we come back from Group Info where maybe we have changed the group name or added users, we want to show the new name and present number of users.
+
+---
+
+![height:340](then_1.png) ![height:340](then_2.png) ![height:340](then_3.png)![height:340](then_4.png) ![height:340](then_5.png) ![height:340](then_6_edited.png)
+
+<br><br>
+Other screens also do ``.then`` to update the title in the app bar.
 
 
 ---
@@ -383,14 +390,35 @@ Similar to the screen with a group info.
 
 ---
 
+![bg right height:700](avatars1.png) ![bg right:65% height:700](avatars2.png)
+
+Better with avatars.
+
+---
+
+See 
+- attribute ``images`` in ``data.dart``, a dictionary with the address of each user image
+- ```dart
+  Widget _buildRow(User user, int index) {
+    return ListTile(
+      leading: CircleAvatar(foregroundImage: 
+        NetworkImage(Data.images[user.name.toLowerCase()]!)),
+  ```
+- class [CircleAvatar](https://api.flutter.dev/flutter/material/CircleAvatar-class.html)  
+- Flutter's [assets and images](https://docs.flutter.dev/ui/assets/assets-and-images)
+
+Images are in the cloud, uploaded with [https://transfer.sh](https://transfer.sh)
+
+---
+
 Grading
 ===
 
-- 1/3 of total points if screen group (slide 13), group info (14), actions (20)
+- 1/3 of total points if screen group (slide 14), group info (15), actions (21)
 
-- 2/3 total points if previous item plus schedule (15)
+- 2/3 total points if previous item plus schedule (16)
 
-- all the points if previous item plus list of users (21) and user info (22)
+- all the points if previous item plus list of users (24) and user info (25)
 
 In all the cases, it is desirable to implement persistence across screens (input/changes is really done on the data and shown) but not mandatory.
 
