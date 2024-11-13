@@ -320,8 +320,8 @@ I've found two solutions: either
 and replace ``textTheme.textBody2`` with ``textTheme.bodyMedium`` in the 3 places where it appears, or equivalently
 
 - download source code from https://github.com/smaho-engineering/weekday_selector as a zip and uncompress it in
-``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\"
-and move everything inside week_day_selector-1.1.0\weekday_selector-master to week_day_selector-1.1.0\``
+``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\``
+and move everything inside ``week_day_selector-1.1.0\weekday_selector-master``  to ``week_day_selector-1.1.0\``
 
 ---
 
