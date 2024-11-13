@@ -148,7 +148,7 @@ Guidelines to make a drawer https://flutter.dev/docs/cookbook/design/drawer
 TODO
 ===
 
-We provide you the former 5 files, you don't need to change them except for ``screen_list_groups.dart`` where you have to implement ``onTap()`` of ``_buildRow()`` in order to go to the group screen, to start showing the $i$-th group in the list.
+You don't need to change the former 5 files except for ``screen_list_groups.dart`` where you have to implement ``onTap()`` of ``_buildRow()`` in order to go to the group screen (figure in the cover), to start showing the $i$-th group in the list.
 
 ---
 
@@ -295,6 +295,33 @@ Text(_dateFormatter.format(someDateTime));
 ![](weekdayselector2.png)
 ![](weekdayselector3.png)
 
+---
+
+In Windows, when using the WeekdaySelector v1.1.0 package in ``screen_schedule.dart`` you can find this error :
+
+```
+Launching lib\solution\main.dart on Windows in debug mode...
+Building Windows application...
+../../AppData/Local/Pub/Cache/hosted/pub.dev/weekday_selector-1.1.0/lib/src/weekday_selector.dart(476,27): 
+error G4127D1E8: The getter 'bodyText2' isn't defined for the class 'TextTheme'. 
+:
+:
+[C:\Users\1002063\IdeaProjects\exercici_flutter_acs\build\windows\x64\flutter\flutter_assemble.vcxproj]
+Error: Build process failed.
+```
+
+This is because their code uses the ``bodyText2`` attribute of the Flutter ``TextTheme`` class instead of ``bodyMedium`` of the newest version (the package has not been entirely updated).
+
+---
+
+I've found two solutions: either
+
+- edit ``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\weekday_selector-1.1.0\lib\src\weekday_selector.dart``
+and replace ``textTheme.textBody2`` with ``textTheme.bodyMedium`` in the 3 places where it appears, or equivalently
+
+- download source code from https://github.com/smaho-engineering/weekday_selector as a zip and uncompress it in
+``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\"
+and move everything inside week_day_selector-1.1.0\weekday_selector-master to week_day_selector-1.1.0\``
 
 ---
 
@@ -396,29 +423,57 @@ Better with avatars.
 
 ---
 
-See 
-- attribute ``images`` in ``data.dart``, a dictionary with the address of each user image
-- ```dart
+Hints:
+
+- see attribute ``images`` in ``data.dart``, a dictionary with the file name of each user's image
+- when showing the list of users in a certain group,
+  ```dart
   Widget _buildRow(User user, int index) {
     return ListTile(
       leading: CircleAvatar(foregroundImage: 
-        NetworkImage(Data.images[user.name.toLowerCase()]!)),
+         FileImage(File(Data.images[user.name.toLowerCase()]!)) as ImageProvider
+      ),
+      title: Text(user.name),
   ```
 - class [CircleAvatar](https://api.flutter.dev/flutter/material/CircleAvatar-class.html)  
-- Flutter's [assets and images](https://docs.flutter.dev/ui/assets/assets-and-images)
 
-Images are in the cloud, uploaded with [https://transfer.sh](https://transfer.sh)
+---
+
+When showing/editing the info of an user,
+
+```dart
+@override
+  void initState() {
+    ...
+    imageAvatar = FileImage(File(userImageName));
+  }
+```
+
+```dart
+body: Form(
+  child: Container(
+      child: Column(
+        children: [
+          // https://stackoverflow.com/questions/49809351/
+          //    how-to-create-a-circle-icon-button-in-flutter
+          ElevatedButton(
+            onPressed: () { ... }, // pick an image from a file
+            child: CircleAvatar(
+              foregroundImage: imageAvatar,
+            ),
+          ),
+```
 
 ---
 
 Grading
 ===
 
-- 1/3 of total points if screen group (slide 14), group info (15), actions (21)
+- 1/3 of total points if screen group (slide 14), group info (15), actions (23)
 
 - 2/3 total points if previous item plus schedule (16)
 
-- all the points if previous item plus list of users (24) and user info (25)
+- all the points if previous item plus list of users and user info with avatars (26)
 
 In all the cases, it is desirable to implement persistence across screens (input/changes is really done on the data and shown) but not mandatory.
 
