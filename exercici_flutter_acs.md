@@ -5,6 +5,14 @@ size: 16:9
 paginate: true
 ---
 
+<!-- https://github.com/orgs/marp-team/discussions/533 -->
+<style>
+  section {
+    align-content: unsafe center;
+  }
+</style>
+
+
 Exercise Flutter : 
 User Groups in ACS app
 ===
@@ -49,7 +57,7 @@ Program in Flutter the user interface of the ACS app to manage the groups of use
 Code provided [here](https://github.com/disseny-de-software/exercici_flutter_acs_students)
 ===
 
-[``data.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/data.dart)
+### ``data.dart``
  
 The data of the admin, managers and employees is in Flutter, no webserver here.
 
@@ -62,7 +70,7 @@ The data of the admin, managers and employees is in Flutter, no webserver here.
 
 ---
 
-[``main.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/main.dart)
+### ``main.dart``
 
 The entry point of the app. As always, sets the ``ThemeData`` which means the ``ColorScheme`` and ``TextTheme``.
 
@@ -84,7 +92,7 @@ Read this https://docs.flutter.dev/cookbook/design/themes
 
 ![bg right:35% height:700](blank.png)
 
-[``screen_blank.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/screen_blank.dart)
+### ``screen_blank.dart``
 
 - No content, first screen shown when executing.
 - Just want it to open the drawer and go to list of groups
@@ -95,7 +103,7 @@ Read this https://docs.flutter.dev/cookbook/design/themes
 
 ![bg right:35% height:700](drawer.png)
 
-[``drawer.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/screen_blank.dart)
+### ``drawer.dart``
 
 Defines class ``TheDrawer`` with attribute ``drawer``,  an instance of Flutter ``Drawer``. This is because several screens have this same drawer.
 
@@ -118,7 +126,7 @@ Guidelines to make a drawer https://flutter.dev/docs/cookbook/design/drawer
 ![bg right:35% height:700](list_user_groups.png)
 
 
-[``screen_list_groups.dart``](https://github.com/disseny-de-software/exercise_flutter_acs/src/screen_list_groups.dart)
+### ``screen_list_groups.dart``
 
 - ``ScreenListGroups`` receives ``userGroups`` from ``TheDrawer``:
   ```dart
@@ -297,7 +305,7 @@ Text(_dateFormatter.format(someDateTime));
 
 ---
 
-In Windows, when using the WeekdaySelector v1.1.0 package in ``screen_schedule.dart`` you can find this error :
+When using the WeekdaySelector v1.1.0 package in ``screen_schedule.dart`` you may find this error :
 
 ```
 Launching lib\solution\main.dart on Windows in debug mode...
@@ -314,6 +322,7 @@ This is because their code uses the ``bodyText2`` attribute of the Flutter ``Tex
 
 ---
 
+<!--
 I've found two solutions: either
 
 - edit ``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\weekday_selector-1.1.0\lib\src\weekday_selector.dart``
@@ -322,6 +331,22 @@ and replace ``textTheme.textBody2`` with ``textTheme.bodyMedium`` in the 3 place
 - download source code from https://github.com/smaho-engineering/weekday_selector as a zip and uncompress it in
 ``C:\Users\YourName\AppData\Local\Pub\Cache\hosted\pub.dev\``
 and move everything inside ``week_day_selector-1.1.0\weekday_selector-master``  to ``week_day_selector-1.1.0\``
+-->
+
+If so, do this : in ``pubspec.yaml``
+
+```yaml
+dependencies:
+  intl: ^0.18.1
+  # weekday_selector: ^1.1.0
+  weekday_selector:
+    git:
+      url: https://github.com/smaho-engineering/weekday_selector.git
+      ref: e9c604a8cabb04ea3a169c3379c270c59810e4b0
+``` 
+
+This downloads the last, updated version of the plugin from github. 
+
 
 ---
 
@@ -429,9 +454,13 @@ Hints:
 - when showing the list of users in a certain group,
   ```dart
   Widget _buildRow(User user, int index) {
+    String fileName = Data.images[user.name.toLowerCase()]!;
     return ListTile(
-      leading: CircleAvatar(foregroundImage: 
-         FileImage(File(Data.images[user.name.toLowerCase()]!)) as ImageProvider
+      leading: CircleAvatar(foregroundImage:
+          fileName.startsWith('http') ?
+            NetworkImage(fileName)
+            : FileImage(File(fileName)) as ImageProvider
+
       ),
       title: Text(user.name),
   ```
@@ -439,7 +468,7 @@ Hints:
 
 ---
 
-When showing/editing the info of an user,
+When showing/editing the info of an user (desktop target only!)
 
 ```dart
 @override
@@ -487,7 +516,7 @@ Deliverables
 A zip file, named ``exercici_flutter.zip`` with the following content :
 
 1. The text file with the NIU and names of the authors.
-1. If you have done the exercise with IntelliJ, directory ``lib`` plus ``pubspec.yaml``. If you have done it with dartpad.dev then the single dart source file, runnable in dartpad.
+1. Directory ``lib`` plus ``pubspec.yaml``
 3. Some screen captures showing how it works
 4. A pdf file explaining the changes requested by the instructor during the assessment and proof of having done them.
 
