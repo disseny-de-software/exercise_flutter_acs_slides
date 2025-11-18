@@ -504,7 +504,7 @@ Grading
 
 - all the points if previous item plus list of users and user info with avatars (26)
 
-In all the cases, it is desirable to implement persistence across screens (input/changes is really done on the data and shown) but not mandatory.
+It is necessary to implement persistence across screens : changes (group addition, edit group name, user name, credential $\ldots$ like in slide #13) persist during the execution (but not across runs).
 
 FAB button to add a new user has to be implemented and it must appear later in the list of users.
 
