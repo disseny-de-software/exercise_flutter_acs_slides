@@ -85,11 +85,7 @@ In the final solution you reach to this screen from the one with the features of
 
 ---
 
-8. Go to class ``_ScreenListGroupsState``. We have to change the parameter ``onTap`` of ``ListTile`` in method ``_buildRow()`` (bottom of file) from
-    ```dart
-    () {}
-    ```
-    to 
+8. Go to class ``_ScreenListGroupsState``. We have to change the parameter ``onTap`` of ``ListTile`` in method ``_buildRow()`` (bottom of file) from ``() {}`` to 
     ```dart
     () {
         Navigator.of(context).push(MaterialPageRoute<void>(
@@ -97,6 +93,8 @@ In the final solution you reach to this screen from the one with the features of
                 ScreenListUsers(userGroup: userGroup)));
     }
     ```
+    and add import of ``screen_list_users.dart``
+    <br>
 
     Now the list of users should appear when we click on a group.
 
