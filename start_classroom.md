@@ -36,8 +36,9 @@ If not, you can try to proceed with https://dartpad.dev, no installation require
 
    If *dartpad*
    - copy the code of 5 file files into the editor window
-   - remove the ``import`` sentences
-   
+   - remove all the import sentences except
+    ``import 'package:flutter/material.dart'``
+<br>   
 
 3. Run and check it works
 
